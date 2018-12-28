@@ -1,11 +1,13 @@
 const {MongoClient, ObjectID} = require('mongodb');
 
+
+
 MongoClient.connect('mongodb://localhost:27017/TodoApp',{ useNewUrlParser: true },(err, client)=>{
     if(err){
         return console.log('we are unable to connect to MongoDB server');
     }
     console.log('Connected to mongoDB server');
-//    const db = client.db('TodoApp'); //creating a database reference
+    const db = client.db('TodoApp'); //creating a database reference
 //    
 //    db.collection('Todos').insertOne({
 //        text: 'This is mongo ',
@@ -17,7 +19,8 @@ MongoClient.connect('mongodb://localhost:27017/TodoApp',{ useNewUrlParser: true 
 //        console.log(JSON.stringify(result.ops,undefined,2));
 //    });
 //    
-//    db.collection('Users').insertOne({
+//    db.collection('Users').insertOne({  
+//     
 //        name: 'matt',
 //        age : 24,
 //        location: 'Kolkata'
@@ -27,7 +30,19 @@ MongoClient.connect('mongodb://localhost:27017/TodoApp',{ useNewUrlParser: true 
 //        }
 //        console.log(JSON.stringify(result.ops,undefined,2));
 //    });
-//    
+////    
+//    db.collection('Users').deleteMany({name:'matt'}).then((result)=>{
+//        console.log(`deleteMany command worked: ${result}`);
+//    },(err)=>{
+//        console.log(`Something went wrong! ${err}`);
+//    });
+    
+    db.collection('Users').deleteMany({_id: new ObjectID("5c24e7d1ba18ce41868bce6d")}).then((result)=>{
+        console.log(`deleteMany command worked: ${result}`);
+    },(err)=>{
+        console.log(`Something went wrong! ${err}`);
+    });
+    
     client.close();
 }); 
 
