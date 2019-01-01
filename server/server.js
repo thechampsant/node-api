@@ -34,7 +34,7 @@ app.get('/to',(req,res)=>{
 app.get('/to/:id',(req,res)=>{
     
     if(!ObjectID.isValid(req.params.id)){
-        return res.status(404).send('invalid ID!');
+        return res.status(404).send();
     }
     
     Todo.findById(req.params.id).then((doc)=>{
