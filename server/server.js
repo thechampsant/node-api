@@ -7,7 +7,9 @@ var bodyParser = require('body-parser');
 var {ObjectID} = require('mongodb');
 
 var app = express();
+const port = process.env.PORT || 3000; //process.env will work if its working on horuku and it wont run if it works locally
 
+ 
 app.use(bodyParser.json());
 
 app.post('/to',(req,res)=>{
@@ -47,8 +49,8 @@ app.get('/to/:id',(req,res)=>{
     });
 })
 
-app.listen(3000,()=>{
-   console.log('started on port 3000'); 
+app.listen(port,()=>{
+   console.log(`started up at port ${port}`); 
 });
 
 module.exports = {
