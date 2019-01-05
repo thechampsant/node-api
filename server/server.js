@@ -6,6 +6,8 @@ var express = require('express');
 var bodyParser = require('body-parser');
 var {ObjectID} = require('mongodb');
 
+var _ = require('lodash');
+
 var app = express();
 const port = process.env.PORT || 3000; //process.env will work if its working on horuku and it wont run if it works locally
 
@@ -49,6 +51,21 @@ app.get('/to/:id',(req,res)=>{
     });
 })
 
+app.post('/users',(req,res)=>{
+ var body = _.pick(req.body,['email','password']);
+ var user = new User(body);
+    
+
+ user.save().then(()=>{
+    return user.generateAuthToken();
+ }).then((token)=>{
+     res.header('x-auth',token).send(user);
+ }).catch((e)=>{
+     res.send(e);
+ })
+});
+
+
 app.listen(port,()=>{
    console.log(`started up at port ${port}`); 
 });
@@ -56,6 +73,16 @@ app.listen(port,()=>{
 module.exports = {
     app
 };
+
+/*there two types of methods model methods and instance methods:-
+Model method is called on all User 'U'
+instance method is called on indivisual user 'u'/
+
+generateAuthTokebn will be resposnisble foradding 
+indivisual user doc saving it and returning back the user
+*
+
+
 /*
 focusing on post route this is going to let us create new Todos
 This will let us create CRUD operations - create, read, update and delete
